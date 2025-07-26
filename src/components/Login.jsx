@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import { useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
-
+// @ts-ignore
+import {jwtDecode} from 'jwt-decode';
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -23,16 +23,16 @@ function Login({ onLogin }) {
       const data = await res.json();
 
       if (res.ok && data.token) {
-        const decode = jwtDecode(data.token);
+        const decoded = jwtDecode(token);
         const now = Date.now() / 1000;
 
-        if (decode.exp < now) {
+        if (decoded.exp < now) {
           setMessage('Session expired - please login again');
           return;
         }
         localStorage.setItem('token', data.token);
-        localStorage.setItem('username', decode.username);
-        localStorage.setItem('role', decode.role);
+        localStorage.setItem('username', decoded.username);
+        localStorage.setItem('role', decoded.role);
         setMessage('Login successful');
         onLogin && onLogin();
         navigate('/dashboard'); 
