@@ -9,7 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
 import AdminPage from './components/AdminPage'; 
 import Unauthorized from './components/Unauthorized'; 
-import RoleThemeWrapper from './components/RoleThemeWrapper';
+import RoleThemeWrapper from './styles/RoleThemeWrapper';
 import SubmitDoc from './pages/SubmitDoc';
 import ReviewDocs from './pages/ReviewDocs';
 
