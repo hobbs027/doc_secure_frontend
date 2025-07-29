@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import './SidebarLayout.css';
 import { getAllowedPanels } from '../utils/rolePanels';
 
 function SidebarLayout({ children }) {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthContext();
   const AllowedPanels = getAllowedPanels(user.role);
   const [activePanel, setActivePanel] = useState('files');
 
