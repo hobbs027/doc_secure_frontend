@@ -1,46 +1,71 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import './SidebarLayout.css';
+import { getAllowedPanels } from '../utils/rolePanels';
 
-const SidebarLayout = ({ children, onLogout }) => {
+function SidebarLayout({ children }) {
+  const { user, logout } = useAuth();
+  const AllowedPanels = getAllowedPanels(user.role);
   const [activePanel, setActivePanel] = useState('files');
 
-  const navItems = [
-    { id: 'files', label: '📁 File Manager' },
-    { id: 'alerts', label: '🚨 Alerts & Insights' },
-    { id: 'logs', label: '🕵️ Audit Logs' },
-    { id: 'visuals', label: '📊 Visual Analytics' },
-    { id: 'ledger', label: '📜 Ledger Viewer' }
-  ];
+  useEffect(() => {
+    if (user.role === 'admin') {
+      document.body.classList.add('dark');
+    }
+    return () => {
+      document.body.classList.remove('dark');
+    };
+  }, [user.role]);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md p-4 space-y-4">
-        <h2 className="text-xl font-bold mb-4">🔐 Audit Dashboard</h2>
-        {navItems.map(item => (
-          <button
-            key={item.id}
-            onClick={() => setActivePanel(item.id)}
-            className={`block w-full text-left px-3 py-2 rounded ${
-              activePanel === item.id ? 'bg-blue-600 text-white' : 'hover:bg-gray-200'
-            }`}
-          >
-            {item.label}
-          </button>
-        ))}
-        <button
-          onClick={onLogout}
-          className="mt-8 w-full bg-red-600 text-white px-3 py-2 rounded hover:bg-red-700"
-        >
-          Logout
-        </button>
-      </aside>
+    <div className="sidebar-container">
+      <div className={`sidebar ${user.role}`}>
+        <aside className="sidebar">
+          <h2>Welcome, {user.username || 'User'}</h2>
+          <p>Role: {user.role}</p>
+          <nav>
+            <ul>
+              <li
+                className={activePanel === 'files' ? 'active-link' : ''}
+                onClick={() => setActivePanel('files')}
+              >
+                Files
+              </li>
+              <li
+                className={activePanel === 'alerts' ? 'active-link' : ''}
+                onClick={() => setActivePanel('alerts')}
+              >
+                Alerts
+              </li>
+              <li
+                className={activePanel === 'logs' ? 'active-link' : ''}
+                onClick={() => setActivePanel('logs')}
+              >
+                Logs
+              </li>
+              <li
+                className={activePanel === 'visuals' ? 'active-link' : ''}
+                onClick={() => setActivePanel('visuals')}
+              >
+                Visuals
+              </li>
+              <li
+                className={activePanel === 'ledger' ? 'active-link' : ''}
+                onClick={() => setActivePanel('ledger')}
+              >
+                Ledger
+              </li>
+              <li onClick={logout}>Logout</li>
+            </ul>
+          </nav>
+        </aside>
 
-      {/* Main Panel */}
-      <main className="flex-1 p-6 overflow-y-auto">
-        {children(activePanel)}
-      </main>
+        <main className="main-content">
+          {typeof children === 'function' ? children(activePanel) : children}
+        </main>
+      </div>
     </div>
   );
-};
+}
 
 export default SidebarLayout;

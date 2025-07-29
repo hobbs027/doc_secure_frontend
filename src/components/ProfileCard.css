@@ -1,0 +1,42 @@
+.profile-card {
+  background-color: #fdfdfd;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+/* Role-specific themes */
+.profile-card.admin {
+  border-left: 4px solid #d33c3c;
+}
+.profile-card.reviewer {
+  border-left: 4px solid #2a9d8f;
+}
+.profile-card.uploader {
+  border-left: 4px solid #5a5afc;
+}
+
+.profile-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.profile-card p {
+  margin: 0.35rem 0;
+  font-size: 0.95rem;
+}
+
+.profile-card span {
+  font-weight: bold;
+}
+
+.profile-card .expired {
+  color: #d33c3c;
+}
+
+.profile-card .active {
+  color: #2e7d32;
+}
