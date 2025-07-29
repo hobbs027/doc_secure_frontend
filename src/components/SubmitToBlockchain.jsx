@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEthereum } from "../hooks/useEthereum";
-import { getSha256Hash } from "../crypto/hashUtils";
+import { hashDocument } from "../utils/hashDoc";
 import { toast } from "react-hot-toast";
 
 const SubmitToBlockchain = ({ documentContent, docId, onVerified }) => {
@@ -17,7 +17,7 @@ const SubmitToBlockchain = ({ documentContent, docId, onVerified }) => {
       setLoading(true);
       toast.loading("Submitting document to Ethereum...");
 
-      const hash = getSha256Hash(documentContent);
+      const hash = hashDocument("Untitled",documentContent);
 
       let tx;
       if (process.env.NODE_ENV === "development" || !contract) {

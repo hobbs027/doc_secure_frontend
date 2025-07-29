@@ -13,7 +13,7 @@ export function useEthereum() {
     const init = async () => {
       if (!window.ethereum) return;
       try {
-        const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
+        const tempProvider = new ethers.providers.BrowserProvider(window.ethereum);
         await tempProvider.send("eth_requestAccounts", []);
         const tempSigner = tempProvider.getSigner();
         const tempContract = new ethers.Contract(contractAddress, DocumentVerifierABI, tempSigner);

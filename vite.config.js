@@ -7,4 +7,12 @@ export default defineConfig({
     port: 5173,
     open: true, // optional: auto-opens browser
   },
+  optimizeDeps: {
+    include: ['ethers'],
+  },
+  build: {
+    rollupOptions: {
+      external: ['ethers'],
+    },
+  },
 });
