@@ -1,7 +1,7 @@
 // hooks/useAutoLogout.js
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import { toast } from 'react-toastify';
 
 export default function useAutoLogout(token, logoutHandler) {

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import DocumentVerifierABI from "../contracts/DocumentVerifierABI.json";
-import { contractAddress } from "../contracts/contractInfo";
+import { contractAddress } from "../contracts/contractInfo.js";
 
 export function useEthereum() {
   const [provider, setProvider] = useState(null);
