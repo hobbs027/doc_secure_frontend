@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import useAutoLogout from '../hooks/useAutoLogout';
 
 import SidebarLayout from './SidebarLayout';
@@ -22,7 +22,7 @@ import SubmitToBlockchain from '../components/SubmitToBlockchain';
 import StatusBadge from '../components/StatusBadge';
 
 function Dashboard({ onLogout }) {
-  const { user, token } = useAuth();
+  const { user, token } = useAuthContext();
   const navigate = useNavigate();
 
   const [statusFilter, setStatusFilter] = useState('all');
