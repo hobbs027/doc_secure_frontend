@@ -1,9 +1,9 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuthContext } from '../context/AuthContext';
 import RoleBanner from '../components/RoleBanner';
 
 export default function RoleThemeWrapper({ children }) {
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   const getRoleStyles = (role) => {
     switch (role) {
