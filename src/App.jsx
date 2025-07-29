@@ -6,9 +6,9 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
-import RoleProtectedRoute from './components/RoleProtectedRoute'; // 👈 new import
-import AdminPage from './components/AdminPage'; // example role-specific page
-import Unauthorized from './components/Unauthorized'; // fallback page for denied access
+import RoleProtectedRoute from './components/RoleProtectedRoute';
+import AdminPage from './components/AdminPage'; 
+import Unauthorized from './components/Unauthorized'; 
 import RoleThemeWrapper from './components/RoleThemeWrapper';
 import SubmitDoc from './pages/SubmitDoc';
 import ReviewDocs from './pages/ReviewDocs';
