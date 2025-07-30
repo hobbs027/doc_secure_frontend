@@ -8,7 +8,7 @@ const useSignup = () => {
 
   const signup = async ({ username, email, password, role }) => {
     try {
-      const res = await fetch(`https://localhost/3001/api/auth/signup`, {
+      const res = await fetch("https://localhost:3001/api/auth/signup", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password, role }),
