@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-
 export default function Signup() {
+  console.log("Signup component loaded");
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {

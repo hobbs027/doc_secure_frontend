@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 import { useNavigate } from 'react-router-dom';
 // @ts-ignore
 import {jwtDecode} from 'jwt-decode';
