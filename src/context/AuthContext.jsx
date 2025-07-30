@@ -8,7 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [tokenExp, setTokenExp] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }) => {
     const timeUntilLogout = tokenExp - now;
 
     if (timeUntilLogout <= 0) {
-      logout();
+      handleLogout();
     } else {
-      const timer = setTimeout(logout, timeUntilLogout * 1000);
+      const timer = setTimeout(handleLogout, timeUntilLogout * 1000);
       return () => clearTimeout(timer);
     }
   }, [tokenExp]);
@@ -51,13 +51,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
+  const handleLogout = () => {
     setUser(null);
     setTokenExp(null);
     localStorage.removeItem('token');
     toast.success('Logged out successfully!');
     toast.info('Session expired — you’ve been logged out');
-    navigate('/login'); // ✅ useNavigate for imperative redirect
+    navigate('/login');
+  };
+
+  const logout = () => {
+    handleLogout();
   };
 
   const updateUser = (newUser) => {
@@ -71,5 +75,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// ✅ Named export to match import usage
 export const useAuthContext = () => useContext(AuthContext);

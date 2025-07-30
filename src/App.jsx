@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
@@ -14,30 +14,28 @@ import Unauthorized from './components/Unauthorized';
 import RoleThemeWrapper from './styles/RoleThemeWrapper';
 import SubmitDoc from './pages/SubmitDoc';
 import ReviewDocs from './pages/ReviewDocs';
-import {useEthereum} from './hooks/useEthereum';
+import { useEthereum } from './hooks/useEthereum';
 
 function App() {
   const { provider, signer, contract } = useEthereum();
 
   useEffect(() => {
     if (provider && signer && contract) {
-      toast.success(" Ethereum connected");
-      console.log("Ethereum initialized successfully");
-
-      // Optional: check network
+      toast.success('Ethereum connected');
+      console.log('Ethereum initialized successfully');
       const checkNetwork = async () => {
         const network = await provider.getNetwork();
-        console.log("Connected to:", network.name);
+        console.log('Connected to:', network.name);
       };
       checkNetwork();
     } else {
-      toast.error(" Ethereum not available");
-      console.error("Ethereum initialization failed");
+      toast.error('Ethereum not available');
+      console.error('Ethereum initialization failed');
     }
   }, [provider, signer, contract]);
 
   return (
-    <Router>
+    <>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -97,7 +95,7 @@ function App() {
       </Routes>
 
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar theme="light" />
-    </Router>
+    </>
   );
 }
 
