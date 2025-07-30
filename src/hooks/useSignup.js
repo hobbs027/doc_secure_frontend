@@ -1,12 +1,10 @@
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext'; 
+import { useAuthContext } from '../context/AuthContext';
 
 const useSignup = () => {
   const Navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { login } = useAuthContext();
 
   const signup = async ({ username, email, password, role }) => {
     try {
@@ -20,28 +18,11 @@ const useSignup = () => {
       const data = await res.json();
 
       if (res.ok && data.token) {
-        const decoded = jwtDecode(data.token);
-
-        // Expiry check
-        const now = Date.now() / 1000;
-        if (decoded.exp < now) {
-          toast.error('Session expired — please try signing up again');
-          return { success: false, message: 'Session expired' };
-        }
-
-        // Save to localStorage (or secure cookie if preferred)
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', decoded.username);
-        localStorage.setItem('role', decoded.role);
-
-        // Optional: store in context for global access
-        setAuth({ token: data.token, role: decoded.role, username: decoded.username });
-
+        login(data.token); 
         toast.success(data.message || 'Signup successful!');
         return { success: true };
       }
 
-      // Backend error like duplicate email
       toast.error(data.message || 'Signup failed');
       return { success: false, message: data.message };
     } catch (err) {
