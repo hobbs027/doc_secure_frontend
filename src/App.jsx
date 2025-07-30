@@ -13,7 +13,7 @@ import Unauthorized from './components/Unauthorized';
 import RoleThemeWrapper from './styles/RoleThemeWrapper';
 import SubmitDoc from './pages/SubmitDoc';
 import ReviewDocs from './pages/ReviewDocs';
-import useEthereum from './hooks/useEthereum';
+import {useEthereum} from './hooks/useEthereum';
 
 function App() {
   const { provider, signer, contract } = useEthereum();
