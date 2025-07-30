@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 // @ts-ignore
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -11,20 +11,18 @@ function Login({ onLogin }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
 
       if (res.ok && data.token) {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(data.token);
         const now = Date.now() / 1000;
-
         if (decoded.exp < now) {
           setMessage('Session expired - please login again');
           return;
@@ -34,12 +32,12 @@ function Login({ onLogin }) {
         localStorage.setItem('role', decoded.role);
         setMessage('Login successful');
         onLogin && onLogin();
-        navigate('/dashboard'); 
+        navigate('/dashboard');
       } else {
         setMessage(data.message || 'Invalid credentials');
       }
     } catch (err) {
-      console.error("Login error:", err);
+      console.error('Login error:', err);
       setMessage('Server error occurred');
     }
   };
@@ -69,6 +67,9 @@ function Login({ onLogin }) {
           Login
         </button>
       </form>
+      <p className="mt-4 text-sm">
+        Don’t have an account? <Link to="/signup" className="text-blue-600 underline">Sign up here</Link>
+      </p>
     </div>
   );
 }
