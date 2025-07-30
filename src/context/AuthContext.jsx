@@ -1,3 +1,4 @@
+// /context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
@@ -6,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState(null);
   const [tokenExp, setTokenExp] = useState(null);
   const navigate = useNavigate();
 
@@ -15,12 +16,12 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUser({ email: decoded.email, role: decoded.role });
+        setAuth({ username: decoded.username, email: decoded.email, role: decoded.role, token });
         setTokenExp(decoded.exp);
       } catch (err) {
         console.error('Token decode failed', err);
         localStorage.removeItem('token');
-        toast.error('Session error: Please login again');
+        toast.error('Session error — please login again');
       }
     }
   }, []);
@@ -42,21 +43,20 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     try {
       const decoded = jwtDecode(token);
-      setUser({ email: decoded.email, role: decoded.role });
+      setAuth({ username: decoded.username, email: decoded.email, role: decoded.role, token });
       setTokenExp(decoded.exp);
       localStorage.setItem('token', token);
-      toast.success(`Welcome ${decoded.email}`);
+      toast.success(`Welcome ${decoded.username || decoded.email}`);
     } catch (err) {
       toast.error('Login failed');
     }
   };
 
   const handleLogout = () => {
-    setUser(null);
+    setAuth(null);
     setTokenExp(null);
     localStorage.removeItem('token');
-    toast.success('Logged out successfully!');
-    toast.info('Session expired — you’ve been logged out');
+    toast.success('Logged out successfully');
     navigate('/login');
   };
 
@@ -64,12 +64,12 @@ export const AuthProvider = ({ children }) => {
     handleLogout();
   };
 
-  const updateUser = (newUser) => {
-    setUser(newUser);
+  const updateAuth = (newAuth) => {
+    setAuth(prev => ({ ...prev, ...newAuth }));
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ auth, login, logout, updateAuth }}>
       {children}
     </AuthContext.Provider>
   );
