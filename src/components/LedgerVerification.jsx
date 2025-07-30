@@ -9,7 +9,7 @@ function LedgerVerification() {
     setStatus('');
 
     try {
-      const res = await fetch('http://localhost:3000/api/protected/ledger/verify', {
+      const res = await fetch('http://localhost:3001/api/protected/ledger/verify', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

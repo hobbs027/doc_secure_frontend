@@ -4,7 +4,7 @@ function FileSummaryPanel() {
   const [summary, setSummary] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/files/summary', {
+    fetch('http://localhost:3001/api/protected/files/summary', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

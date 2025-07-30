@@ -16,7 +16,7 @@ function ImageGallery() {
     if (filterEmail) params.append('email', filterEmail);
     if (filterRole) params.append('role', filterRole);
 
-    fetch(`http://localhost:3000/api/protected/files/list?${params.toString()}`, {
+    fetch(`http://localhost:3001/api/protected/files/list?${params.toString()}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -32,7 +32,7 @@ function ImageGallery() {
 
   useEffect(fetchImages, [startDate, endDate]);
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/files/uploaders', {
+    fetch('http://localhost:3001/api/protected/files/uploaders', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -105,13 +105,13 @@ function ImageGallery() {
           const {filename, alias, uploadedBy, role} = img;
           <a
             key={i}
-            href={`http://localhost:3000/api/protected/files/download/${img.filename}`}
+            href={`http://localhost:3001/api/protected/files/download/${img.filename}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block border rounded overflow-hidden hover:shadow-lg"
           >
             <img
-              src={`http://localhost:3000/api/protected/files/download/${img.filename}`}
+              src={`http://localhost:3001/api/protected/files/download/${img.filename}`}
               alt={img.filename}
               className="w-full h-40 object-cover"
             />

@@ -7,7 +7,7 @@ export function useAuth() {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    fetch('http://localhost:3000/api/protected/verify-token', {
+    fetch('http://localhost:3001/api/protected/verify-token', {
       headers: {
         Authorization: `Bearer ${token}`
       }

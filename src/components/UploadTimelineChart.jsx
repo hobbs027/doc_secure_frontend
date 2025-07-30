@@ -24,7 +24,7 @@ function UploadTimelineChart() {
     if (selectedRole) params.append('role', selectedRole);
     if (selectedAlias) params.append('alias', selectedAlias);
 
-    fetch(`http://localhost:3000/api/protected/uploads/stats/daily?${params.toString()}`, {
+    fetch(`http://localhost:3001/api/protected/uploads/stats/daily?${params.toString()}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

@@ -34,7 +34,7 @@ function FileManager({ userRole }) {
       if (filterEmail) params.append('email', filterEmail);
       if (filterRole) params.append('role', filterRole);
       if (filterStatus) params.append('status', filterStatus);
-      const res = await fetch('http://localhost:3000/api/protected/files/list?${params.toStrings()}', {
+      const res = await fetch('http://localhost:3001/api/protected/files/list?${params.toStrings()}', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -53,7 +53,7 @@ function FileManager({ userRole }) {
 
   const fetchMeta = async () => {
   try {
-    const res = await fetch('http://localhost:3000/api/protected/files/meta', {
+    const res = await fetch('http://localhost:3001/api/protected/files/meta', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -75,7 +75,7 @@ function FileManager({ userRole }) {
 
   const handleDelete = async (filename) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/protected/files/delete/${filename}`, {
+      const res = await fetch(`http://localhost:3001/api/protected/files/delete/${filename}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -97,7 +97,7 @@ function FileManager({ userRole }) {
 
   const updateFileStatus = async (filename, newStatus) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/protected/files/status/${filename}`, {
+    const res = await fetch(`http://localhost:3001/api/protected/files/status/${filename}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ function FileManager({ userRole }) {
           <button>
             onClick= {async () => {
               const updates= selectedFiles.map(f =>({filename: f, status: batchStatus}));
-              const res= await fetch('http://localhost:3000/api/protected/files/status/batch', {
+              const res= await fetch('http://localhost:3001/api/protected/files/status/batch', {
                 method: 'put',
                 headers: {
                   'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ function FileManager({ userRole }) {
 
       <button
         onClick={async () => {
-          const res = await fetch('http://localhost:3000/api/protected/files/download/batch', {
+          const res = await fetch('http://localhost:3001/api/protected/files/download/batch', {
             method:'POST',
             headers:{
               'Content-Type': 'application/json',
@@ -331,7 +331,7 @@ function FileManager({ userRole }) {
 
                 <div className="space-x-2">
                   <a
-                    href={`http://localhost:3000/api/protected/files/download/${filename}`}
+                    href={`http://localhost:3001/api/protected/files/download/${filename}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-600 hover:underline"
@@ -378,7 +378,7 @@ function FileManager({ userRole }) {
                 </div>
               )}
               <DocumentViewer
-                fileUrl={`http://localhost:3000/api/protected/files/download/${filename}`}
+                fileUrl={`http://localhost:3001/api/protected/files/download/${filename}`}
                 fileName={filename}
               />
             </li>

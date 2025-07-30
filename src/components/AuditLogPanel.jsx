@@ -15,7 +15,7 @@ function AuditLogPanel() {
       if (value) params.append(key, value);
     });
 
-    const res = await fetch(`http://localhost:3000/api/protected/audit/logs?${params.toString()}`, {
+    const res = await fetch(`http://localhost:3001/api/protected/audit/logs?${params.toString()}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
     const data = await res.json();
@@ -74,7 +74,7 @@ function AuditLogPanel() {
           Object.entries(filters).forEach(([key,value]) => {
             if (value) params.append(key, value);
         });
-        const res = await fetch(`http://loalhost:3000/api/protected/audit/logs/export?${params.toString()}`,{
+        const res = await fetch(`http://loalhost:3001/api/protected/audit/logs/export?${params.toString()}`,{
           headers: { Authorization:`Bearer ${localStorage.getItem('token')}`}
           });
 

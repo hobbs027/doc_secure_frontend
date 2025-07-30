@@ -23,7 +23,7 @@ function FileUpload() {
     formData.append('file', selectedFile);
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/api/protected/files/upload');
+    xhr.open('POST', 'http://localhost:3001/api/protected/files/upload');
     xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`);
 
     xhr.upload.addEventListener('progress', (e) => {

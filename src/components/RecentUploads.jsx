@@ -5,7 +5,7 @@ function RecentUploads() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/uploads/recent', {
+    fetch('http://localhost:3001/api/protected/uploads/recent', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

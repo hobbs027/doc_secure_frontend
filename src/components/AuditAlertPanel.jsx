@@ -20,7 +20,7 @@ function AuditAlertPanel({filters, setFilters}) {
   });
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/audit/alerts', {
+    fetch('http://localhost:3001/api/protected/audit/alerts', {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())
@@ -223,7 +223,7 @@ function AuditAlertPanel({filters, setFilters}) {
                )}
                <button
                  onClick={async ()=> {
-                    const res = await fetch('http://localhost:3000/api/protected/audit/alerts/export',{
+                    const res = await fetch('http://localhost:3001/api/protected/audit/alerts/export',{
                         headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}
                     });
                     if(res.ok) {

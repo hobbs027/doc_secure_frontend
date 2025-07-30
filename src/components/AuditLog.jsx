@@ -10,7 +10,7 @@ function AuditLog() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/audit/view', {
+    fetch('http://localhost:3001/api/protected/audit/view', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

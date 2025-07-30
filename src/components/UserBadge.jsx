@@ -5,7 +5,7 @@ function UserBadge() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/me', {
+    fetch('http://localhost:3001/api/protected/me', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

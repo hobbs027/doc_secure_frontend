@@ -5,7 +5,7 @@ function UploadStatsChart() {
   const [roleStats, setRoleStats] = useState({});
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/uploads/stats/role', {
+    fetch('http://localhost:3001/api/protected/uploads/stats/role', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

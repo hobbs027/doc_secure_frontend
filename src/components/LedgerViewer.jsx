@@ -5,7 +5,7 @@ function LedgerViewer() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/protected/ledger/view', {
+    fetch('http://localhost:3001/api/protected/ledger/view', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
