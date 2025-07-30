@@ -10,9 +10,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ['ethers'],
   },
-  build: {
-    rollupOptions: {
-      external: ['ethers'],
-    },
-  },
+ 
 });
