@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -12,9 +13,28 @@ import Unauthorized from './components/Unauthorized';
 import RoleThemeWrapper from './styles/RoleThemeWrapper';
 import SubmitDoc from './pages/SubmitDoc';
 import ReviewDocs from './pages/ReviewDocs';
-
+import useEthereum from './hooks/useEthereum';
 
 function App() {
+  const { provider, signer, contract } = useEthereum();
+
+  useEffect(() => {
+    if (provider && signer && contract) {
+      toast.success(" Ethereum connected");
+      console.log("Ethereum initialized successfully");
+
+      // Optional: check network
+      const checkNetwork = async () => {
+        const network = await provider.getNetwork();
+        console.log("Connected to:", network.name);
+      };
+      checkNetwork();
+    } else {
+      toast.error(" Ethereum not available");
+      console.error("Ethereum initialization failed");
+    }
+  }, [provider, signer, contract]);
+
   return (
     <Router>
       <Routes>
@@ -26,7 +46,7 @@ function App() {
           element={
             <ProtectedRoute>
               <RoleThemeWrapper>
-                <Dashboard/>
+                <Dashboard />
               </RoleThemeWrapper>
             </ProtectedRoute>
           }
@@ -38,40 +58,38 @@ function App() {
             <ProtectedRoute>
               <RoleProtectedRoute allowedRoles={['admin']}>
                 <RoleThemeWrapper>
-                  <AdminPage/>
+                  <AdminPage />
                 </RoleThemeWrapper>
-                
               </RoleProtectedRoute>
             </ProtectedRoute>
           }
         />
 
         <Route
-  path="/submit"
-  element={
-    <ProtectedRoute>
-      <RoleProtectedRoute allowedRoles={['uploader']}>
-        <RoleThemeWrapper>
-          <SubmitDoc />
-        </RoleThemeWrapper>
-      </RoleProtectedRoute>
-    </ProtectedRoute>
-  }
-/>
+          path="/submit"
+          element={
+            <ProtectedRoute>
+              <RoleProtectedRoute allowedRoles={['uploader']}>
+                <RoleThemeWrapper>
+                  <SubmitDoc />
+                </RoleThemeWrapper>
+              </RoleProtectedRoute>
+            </ProtectedRoute>
+          }
+        />
 
-<Route
-  path="/review-submissions"
-  element={
-    <ProtectedRoute>
-      <RoleProtectedRoute allowedRoles={['reviewer']}>
-        <RoleThemeWrapper>
-          <ReviewDocs />
-        </RoleThemeWrapper>
-      </RoleProtectedRoute>
-    </ProtectedRoute>
-  }
-/>
-
+        <Route
+          path="/review-submissions"
+          element={
+            <ProtectedRoute>
+              <RoleProtectedRoute allowedRoles={['reviewer']}>
+                <RoleThemeWrapper>
+                  <ReviewDocs />
+                </RoleThemeWrapper>
+              </RoleProtectedRoute>
+            </ProtectedRoute>
+          }
+        />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<Navigate to="/login" />} />
