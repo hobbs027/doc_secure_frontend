@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ethers } from 'ethers';
 import { toast } from 'react-hot-toast';
 import { hashDocument } from '../utils/hashDoc';
+import { connectToSepolia } from '../utils/connectSepolia';
 import contractABI from '../contract/DocumentVaultABI.json';
 
 const contractAddress = '0xb7f324fc95bbe3374257d9c3eb28655a3a3bd8c3';
@@ -25,18 +25,18 @@ export default function SubmitDocWeb3() {
 
     try {
       const docHash = hashDocument(title, content);
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      const { signer } = await connectToSepolia();
+      const contract = new signer.Contract(contractAddress, contractABI, signer);
 
-      const tx = await contract.submitDocument(docHash, expiresAt || 0); // 0 if no expiry
+      const expiryTimestamp = expiresAt ? Math.floor(new Date(expiresAt).getTime() / 1000) : 0;
+      const tx = await contract.submitDocument(docHash, expiryTimestamp);
       await tx.wait();
 
       toast.success('Document submitted successfully!');
       setTxHash(tx.hash);
       clearForm();
     } catch (err) {
-      toast.error('Submission failed');
+      toast.error(`Submission failed`);
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -67,14 +67,15 @@ export default function SubmitDocWeb3() {
         type="datetime-local"
         value={expiresAt}
         onChange={e => setExpiresAt(e.target.value)}
-        placeholder="Expiry (optional)"
         className="w-full p-2 mb-4 border rounded"
       />
 
       <button
         onClick={submitToBlockchain}
         disabled={isSubmitting}
-        className={`w-full py-2 px-4 rounded ${isSubmitting ? 'bg-gray-400' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
+        className={`w-full py-2 px-4 rounded ${
+          isSubmitting ? 'bg-gray-400' : 'bg-blue-600 text-white hover:bg-blue-700'
+        }`}
       >
         {isSubmitting ? 'Submitting...' : 'Submit Document'}
       </button>
