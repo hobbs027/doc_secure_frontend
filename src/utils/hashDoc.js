@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { keccak256, toUtf8Bytes } from 'ethers';
+import { keccak256, toUtf8Bytes } from 'ethers/lib/utils';
 
 export const hashDocument = (title, content) => {
   const raw = `${title}:${content}`;
