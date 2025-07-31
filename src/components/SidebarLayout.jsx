@@ -3,7 +3,7 @@ import { useAuthContext } from '../context/AuthContext';
 import './SidebarLayout.css';
 import { getAllowedPanels } from '../utils/rolePanels';
 
-function SidebarLayout({ children }) {
+function SidebarLayout({ onLogout, username, role, children }) {
   const { user, logout } = useAuthContext();
   const AllowedPanels = getAllowedPanels(user.role);
   const [activePanel, setActivePanel] = useState('files');
